@@ -15,4 +15,17 @@ def test_account_creation(client):
     # client.post(...)
     # client.get(...)
     # https://flask.palletsprojects.com/en/1.1.x/testing/
-    pass
+    result = client.post('/accounts/new_account')
+    assert result.status_code == 200
+    assert result.json == {'name': 'new_account'}
+
+    result = client.get('/accounts/new_account')
+    assert result.status_code == 200
+    assert result.json == {'name': 'new_account'}
+
+    result = client.post('/accounts/new_account')
+    assert result.status_code == 200
+    assert result.json == {'name': 'new_account'}
+
+    result = client.get('/accounts/unknown_account')
+    assert result.status_code == 404
